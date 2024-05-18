@@ -1,6 +1,18 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "staffmod:item/staff"
+    "parent": "minecraft:item/handheld",
+    "loader": "forge:separate_transforms",
+    "base": {
+        "parent": "staffmod:item/staff_3d"
+    },
+    "perspectives": {
+        "gui": {
+            "parent": "staffmod:item/staff_2d"
+        },
+        "ground": {
+            "parent": "staffmod:item/staff_2d"
+        },
+        "fixed": {
+            "parent": "staffmod:item/staff_2d"
+        }
     }
 }
