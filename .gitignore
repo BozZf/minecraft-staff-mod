@@ -21,6 +21,9 @@ hs_err_pid*
 ### Gradle ###
 .gradle
 /build/
+/run/
+/run-data/
+/mcmodsrepo/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -37,4 +40,7 @@ gradle-app.setting
 ### VS Code ###
 .vscode
 
-# End of https://www.gitignore.io/api/java,gradle
+# Local configuration
+/.env
+/.env.*
+!/.env.example
