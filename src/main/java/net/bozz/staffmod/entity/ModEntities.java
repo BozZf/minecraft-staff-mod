@@ -14,7 +14,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<GravityBolt>> GRAVITY_BOLT = TYPES.register("gravity_bolt",
             () -> EntityType.Builder.<GravityBolt>of(GravityBolt::new, MobCategory.MISC)
-                    .sized(0.6F, 0.6F).clientTrackingRange(8).updateInterval(2).noSave()
+                    .sized(0.3125F, 0.3125F).clientTrackingRange(8).updateInterval(1).noSave()
                     .build(StaffMod.MOD_ID + ":gravity_bolt"));
 
     public static final RegistryObject<EntityType<GravityBlock>> GRAVITY_BLOCK = TYPES.register("gravity_block",

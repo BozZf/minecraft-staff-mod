@@ -5,22 +5,25 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.DragonFireball;
+import net.minecraft.world.entity.projectile.ShulkerBullet;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.level.BlockEvent;
 
-public class GravityBolt extends DragonFireball {
+public class GravityBolt extends ShulkerBullet {
     private static final int MAX_AGE = 100;
+    private static final double SPEED = 2.4;
 
-    public GravityBolt(EntityType<? extends DragonFireball> type, Level level) {
+    public GravityBolt(EntityType<? extends ShulkerBullet> type, Level level) {
         super(type, level);
+        setNoGravity(true);
     }
 
     public GravityBolt(ServerLevel level, Player owner) {
@@ -28,9 +31,12 @@ public class GravityBolt extends DragonFireball {
         setOwner(owner);
         setPos(owner.getEyePosition());
         Vec3 look = owner.getLookAngle();
-        xPower = look.x * 0.1;
-        yPower = look.y * 0.1;
-        zPower = look.z * 0.1;
+        setDeltaMovement(look.scale(SPEED));
+    }
+
+    @Override
+    public void checkDespawn() {
+        // A player's staff also works in peaceful difficulty.
     }
 
     @Override
@@ -43,10 +49,14 @@ public class GravityBolt extends DragonFireball {
 
     @Override
     protected void onHit(HitResult hit) {
-        // DragonFireball.onHit creates the dragon's damaging breath cloud.
+        // Apply the staff's gravity effect instead of vanilla damage and levitation.
         if (level() instanceof ServerLevel level) {
-            if (hit instanceof BlockHitResult blockHit && getOwner() instanceof Player player) {
-                moveBlock(level, blockHit.getBlockPos(), player);
+            if (getOwner() instanceof Player player) {
+                if (hit instanceof BlockHitResult blockHit) {
+                    moveBlock(level, blockHit.getBlockPos(), player);
+                } else if (hit instanceof EntityHitResult entityHit) {
+                    MobGravity.apply(entityHit.getEntity(), player);
+                }
             }
             discard();
         }
