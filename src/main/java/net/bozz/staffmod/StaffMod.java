@@ -4,7 +4,7 @@ import com.mojang.logging.LogUtils;
 
 import net.bozz.staffmod.entity.ModEntities;
 import net.bozz.staffmod.item.ModItems;
-import net.minecraft.client.renderer.entity.DragonFireballRenderer;
+import net.minecraft.client.renderer.entity.ShulkerBulletRenderer;
 import net.minecraft.client.renderer.entity.FallingBlockRenderer;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
@@ -75,7 +75,7 @@ public class StaffMod
         @SubscribeEvent
         public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
         {
-            event.registerEntityRenderer(ModEntities.GRAVITY_BOLT.get(), DragonFireballRenderer::new);
+            event.registerEntityRenderer(ModEntities.GRAVITY_BOLT.get(), ShulkerBulletRenderer::new);
             event.registerEntityRenderer(ModEntities.GRAVITY_BLOCK.get(), FallingBlockRenderer::new);
         }
     }
